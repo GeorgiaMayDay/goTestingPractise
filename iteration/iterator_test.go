@@ -29,3 +29,9 @@ func TestRepeatWithTable(t *testing.T) {
 		}
 	}
 }
+
+func BenchmarkRepart(b *testing.B) {
+	for x := 0; x < b.N; x++ {
+		Repeat("a", 2)
+	}
+}
