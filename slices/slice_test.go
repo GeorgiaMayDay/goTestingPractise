@@ -5,6 +5,13 @@ import (
 	"testing"
 )
 
+func checkSum(t testing.TB, got, want []int) {
+	t.Helper()
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %v want %v", got, want)
+	}
+}
+
 func TestSliceSum(t *testing.T) {
 	t.Run("collection of any size of numbers", func(t *testing.T) {
 		var finalSum int
@@ -26,7 +33,5 @@ func TestSliceSumCreator(t *testing.T) {
 	got := SliceSumCreator(exampleSlice1, exampleSlice2, exampleSlice3)
 	want := []int{1 + 2 + 4, 5 + 3 + 4, 7 + 1 + 8}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Errorf("got %v want %v", got, want)
-	}
+	checkSum(t, got, want)
 }
