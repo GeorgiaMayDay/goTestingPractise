@@ -9,12 +9,9 @@ func SumSlices(arr []int) int {
 }
 
 func SliceSumCreator(numbersToSum ...[]int) []int {
-	sum := 0
-	lengthOfNumbers := len(numbersToSum)
-	finalArr := make([]int, lengthOfNumbers)
-	for i := 0; i < lengthOfNumbers; i++ {
-		sum = SumSlices(numbersToSum[i])
-		finalArr[i] = sum
+	var finalArr []int
+	for _, arr := range numbersToSum {
+		finalArr = append(finalArr, SumSlices(arr))
 	}
 	return finalArr
 }
