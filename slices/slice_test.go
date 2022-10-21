@@ -1,6 +1,9 @@
 package slices
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestSliceSum(t *testing.T) {
 	t.Run("collection of any size of numbers", func(t *testing.T) {
@@ -14,4 +17,16 @@ func TestSliceSum(t *testing.T) {
 		}
 
 	})
+}
+
+func TestSliceSumCreator(t *testing.T) {
+	exampleSlice1 := []int{1, 2, 4}
+	exampleSlice2 := []int{5, 3, 4}
+	exampleSlice3 := []int{7, 1, 8}
+	got := SliceSumCreator(exampleSlice1, exampleSlice2, exampleSlice3)
+	want := []int{1 + 2 + 4, 5 + 3 + 4, 7 + 1 + 8}
+
+	if !reflect.DeepEqual(got, want) {
+		t.Errorf("got %v want %v", got, want)
+	}
 }
