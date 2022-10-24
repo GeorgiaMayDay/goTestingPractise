@@ -19,6 +19,7 @@ type ConfigurableSleeper struct {
 }
 
 func (c *ConfigurableSleeper) Sleep() {
+	c.sleep(c.duration)
 }
 
 func Countdown(buf io.Writer, sleep Sleeper) {
