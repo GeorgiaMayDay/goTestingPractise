@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"reflect"
 	"testing"
+	"time"
 )
 
 type SpySleeper struct {
@@ -12,6 +13,19 @@ type SpySleeper struct {
 
 func (s *SpySleeper) Sleep() {
 	s.Calls++
+}
+
+type ConfigurableSleeper struct {
+	duration time.Duration
+	sleep    func(time.Duration)
+}
+
+type SpyTime struct {
+	durationSlept time.Duration
+}
+
+func (s *SpyTime) Sleep(dur time.Duration) {
+	s.durationSlept = dur
 }
 
 type SpyCountdownWatcher struct {
@@ -63,6 +77,8 @@ func TestCountdown(t *testing.T) {
 	t.Run("test function calls", func(t *testing.T) {
 		fakeWriterAndSleeper := SpyCountdownWatcher{}
 
+		//These need to be passed in as pointers or else
+		//the functions that require a pointer can't be called
 		Countdown(&fakeWriterAndSleeper, &fakeWriterAndSleeper)
 
 		got := fakeWriterAndSleeper.Operations
@@ -84,4 +100,16 @@ func TestCountdown(t *testing.T) {
 			t.Errorf("not enough calls to sleeper, want 3 got %d", sleepySpy.Calls)
 		}
 	})
+}
+
+func TestConfigurableSleep(t *testing.T) {
+	sleepFor := 5 * time.Second
+
+	spyTime := &SpyTime{}
+	sleeper := ConfigurableSleeper{time.Duration(0), spyTime.Sleep}
+	sleeper.sleep(sleepFor)
+
+	if spyTime.durationSlept != sleepFor {
+		t.Errorf("should have slept for %v but slept for %v", sleepFor, spyTime.durationSlept)
+	}
 }
