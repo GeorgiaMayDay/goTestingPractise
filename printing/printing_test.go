@@ -101,7 +101,7 @@ func TestConfigurableSleep(t *testing.T) {
 	sleepFor := 5 * time.Second
 
 	spyTime := &SpyTime{}
-	sleeper := ConfigurableSleeper{time.Duration(5), spyTime.Sleep}
+	sleeper := ConfigurableSleeper{sleepFor, spyTime.Sleep}
 	sleeper.Sleep()
 
 	if spyTime.durationSlept != sleepFor {

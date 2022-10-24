@@ -10,7 +10,7 @@ import (
 
 type BaseSleeper struct{}
 
-func (s BaseSleeper) Sleep() {
+func Sleep() {
 	time.Sleep(1 * time.Second)
 }
 
@@ -19,7 +19,7 @@ func Sum(x int, y int) int {
 }
 
 func main() {
-	sleeper := BaseSleeper{}
+	sleeper := &print.ConfigurableSleeper{Duration: 1 * time.Second, NewSleep: time.Sleep}
 	fmt.Println(Sum(2, 3))
 	print.Greet(os.Stdout, "Elodie")
 	print.Countdown(os.Stdout, sleeper)
