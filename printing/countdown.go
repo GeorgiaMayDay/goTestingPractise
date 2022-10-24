@@ -3,7 +3,6 @@ package printing
 import (
 	"fmt"
 	"io"
-	"time"
 )
 
 const finalWord = "Go!"
@@ -16,7 +15,7 @@ type Sleeper interface {
 func Countdown(buf io.Writer, sleep Sleeper) {
 	for i := start; i > 0; i-- {
 		fmt.Fprintf(buf, "%d\n", i)
-		time.Sleep(1 * time.Second)
+		Sleeper.Sleep(sleep)
 	}
 	fmt.Fprintf(buf, finalWord)
 }
