@@ -1,6 +1,8 @@
 package shapes
 
-import "math"
+import (
+	"math"
+)
 
 type Shape interface {
 	Perimeter() float64
@@ -15,6 +17,7 @@ type Rectangle struct {
 type Triangle struct {
 	Base   float64
 	Height float64
+	side   float64
 }
 
 type Circle struct {
@@ -26,11 +29,12 @@ func (r Rectangle) Perimeter() float64 {
 }
 
 func (c Circle) Perimeter() float64 {
-	return 0
+	return math.Pi * c.Radius * 2
 }
 
 func (t Triangle) Perimeter() float64 {
-	return 0
+	otherSide := math.Sqrt((t.Base * t.Base) - (t.side * t.side))
+	return t.side + t.Base + otherSide
 }
 
 func (r Rectangle) Area() float64 {
