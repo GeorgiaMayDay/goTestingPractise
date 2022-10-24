@@ -8,12 +8,6 @@ import (
 	print "goGitTesting/printing"
 )
 
-type BaseSleeper struct{}
-
-func Sleep() {
-	time.Sleep(1 * time.Second)
-}
-
 func Sum(x int, y int) int {
 	return x + y
 }
