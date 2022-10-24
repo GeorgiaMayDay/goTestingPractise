@@ -14,4 +14,5 @@ func Sum(x int, y int) int {
 func main() {
 	fmt.Println(Sum(2, 3))
 	print.Greet(os.Stdout, "Elodie")
+	print.Countdown(os.Stdout)
 }

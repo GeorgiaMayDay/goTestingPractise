@@ -6,5 +6,5 @@ import (
 )
 
 func Countdown(buf io.Writer) {
-	fmt.Fprintf(buf, "3\n")
+	fmt.Fprintf(buf, "3\n2\n1\nGo!")
 }
