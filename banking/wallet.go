@@ -1,13 +1,13 @@
 package banking
 
-import "fmt"
-
-type Wallet struct{}
-
-func (w Wallet) Deposit(money int) {
-	fmt.Println(money)
+type Wallet struct {
+	balance int
 }
 
-func (w Wallet) Balance() int {
-	return 0
+func (w *Wallet) Deposit(money int) {
+	w.balance += money
+}
+
+func (w *Wallet) Balance() int {
+	return w.balance
 }
