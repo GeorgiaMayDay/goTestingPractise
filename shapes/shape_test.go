@@ -5,13 +5,24 @@ import (
 )
 
 func TestPerimeter(t *testing.T) {
-	rect := Rectangle{10.0, 10.0}
 
-	got := rect.Perimeter()
-	want := 40.0
+	perimeterTest := []struct {
+		name  string
+		shape Shape
+		want  float64
+	}{
+		{name: "Rectangle", shape: Rectangle{10.0, 10.0}, want: 40.0},
+		{name: "Circle", shape: Circle{10}, want: 62.832},
+		{name: "Triangle", shape: Triangle{12, 6}, want: 28.97056},
+	}
 
-	if got != want {
-		t.Errorf("got %.2f want %.2f", got, want)
+	for _, ex := range perimeterTest {
+		t.Run(ex.name, func(t *testing.T) {
+			got := ex.shape.Perimeter()
+			if got != ex.want {
+				t.Errorf("In case %v, got %g want %g", ex.shape, got, ex.want)
+			}
+		})
 	}
 }
 

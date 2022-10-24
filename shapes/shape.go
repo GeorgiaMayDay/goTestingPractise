@@ -3,6 +3,7 @@ package shapes
 import "math"
 
 type Shape interface {
+	Perimeter() float64
 	Area() float64
 }
 
@@ -22,6 +23,14 @@ type Circle struct {
 
 func (r Rectangle) Perimeter() float64 {
 	return 2 * (r.Width + r.Height)
+}
+
+func (c Circle) Perimeter() float64 {
+	return 0
+}
+
+func (t Triangle) Perimeter() float64 {
+	return 0
 }
 
 func (r Rectangle) Area() float64 {
