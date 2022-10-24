@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+
+	print "goGitTesting/printing"
+)
 
 func Sum(x int, y int) int {
 	return x + y
@@ -8,4 +13,5 @@ func Sum(x int, y int) int {
 
 func main() {
 	fmt.Println(Sum(2, 3))
+	print.Greet(os.Stdout, "Elodie")
 }
