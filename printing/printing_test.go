@@ -18,3 +18,17 @@ func TestGreet(t *testing.T) {
 		t.Errorf("got %q want %q", got, want)
 	}
 }
+
+func TestCountdown(t *testing.T) {
+	//now we write our test as greet will accept a buffer and a string and used fprint
+	//to allow decoupling
+	buffer := bytes.Buffer{}
+	Countdown(&buffer)
+
+	got := buffer.String()
+	want := "3"
+
+	if got != want {
+		t.Errorf("got %q want %q", got, want)
+	}
+}
