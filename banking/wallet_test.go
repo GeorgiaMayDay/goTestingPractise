@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestWallet(t *testing.T){
+func TestWallet(t *testing.T) {
 	wallet := Wallet{}
 
 	wallet.Deposit(5)
@@ -13,8 +13,7 @@ func TestWallet(t *testing.T){
 	want := 5
 
 	if got != want {
-		t.Errorf("got %.2f want %.2f", got, want)
+		t.Errorf("got %d want %d", got, want)
 	}
-
 
 }
