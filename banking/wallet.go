@@ -20,9 +20,9 @@ func (w *Wallet) Deposit(money Bitcoin) {
 	w.balance += money
 }
 
-func (w *Wallet) Withdraw(money Bitcoin) Bitcoin {
+func (w *Wallet) Withdraw(money Bitcoin) error {
 	w.balance -= money
-	return money
+	return nil
 }
 
 func (w *Wallet) Balance() Bitcoin {
