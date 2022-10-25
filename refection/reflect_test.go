@@ -110,15 +110,6 @@ func TestWalk(t *testing.T) {
 			[]string{"Needle", "Queedle"},
 			&SpyWalk{},
 		},
-		{
-			"maps",
-			map[string]string{
-				"Cheedle": "Seedle",
-				"Ceedle":  "Sheedle",
-			},
-			[]string{"Seedle", "Sheedle"},
-			&SpyWalk{},
-		},
 	}
 
 	for _, ex := range cases {
@@ -130,10 +121,6 @@ func TestWalk(t *testing.T) {
 
 		if len(got) != len(want) {
 			t.Errorf("got %d want %d", len(got), len(want))
-		}
-
-		if got[0] != want[0] {
-			t.Errorf("got %q, want %q", got[0], want[0])
 		}
 
 		if !reflect.DeepEqual(got, want) {
