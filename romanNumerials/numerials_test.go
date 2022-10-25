@@ -1,29 +1,77 @@
 package romanNumerials
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
-func TestNumericalConverter(t *testing.T) {
+func TestToRomans(t *testing.T) {
 	cases := []struct {
-		Description string
-		Arabic      int
-		Want        string
+		Arabic int
+		Roman  string
 	}{
-		{"1 gets converted to I", 1, "I"},
-		{"3 gets converted to III", 3, "III"},
-		{"4 gets converted to IV", 4, "IV"},
-		{"5 gets converted to V", 5, "V"},
-		{"6 gets converted to VI", 6, "VI"},
-		{"7 gets converted to VII", 7, "VII"},
-		{"8 gets converted to VIII", 8, "VIII"},
-		{"9 gets converted to IX", 9, "IX"},
-		{"10 gets converted to X", 10, "X"},
+		{1, "I"},
+		{3, "III"},
+		{4, "IV"},
+		{5, "V"},
+		{6, "VI"},
+		{7, "VII"},
+		{8, "VIII"},
+		{9, "IX"},
+		{10, "X"},
+		{39, "XXXIX"},
+		{40, "XL"},
+		{47, "XLVII"},
+		{49, "XLIX"},
+		{50, "L"},
+		{93, "XCIII"},
+		{124, "CXXIV"},
+		{450, "CDL"},
+		{478, "CDLXXVIII"},
+		{789, "DCCLXXXIX"},
 	}
 
 	for _, test := range cases {
-		t.Run(test.Description, func(t *testing.T) {
+		t.Run(fmt.Sprintf("%d gets converted to %q", test.Arabic, test.Roman), func(t *testing.T) {
 			got := ConvertToRomans(test.Arabic)
-			if got != test.Want {
-				t.Errorf("got %q, want %q", got, test.Want)
+			if got != test.Roman {
+				t.Errorf("got %q, want %q", got, test.Roman)
+			}
+		})
+	}
+}
+
+func TestToArabic(t *testing.T) {
+	cases := []struct {
+		Arabic int
+		Roman  string
+	}{
+		{1, "I"},
+		{3, "III"},
+		{4, "IV"},
+		{5, "V"},
+		{6, "VI"},
+		{7, "VII"},
+		{8, "VIII"},
+		{9, "IX"},
+		{10, "X"},
+		{39, "XXXIX"},
+		{40, "XL"},
+		{47, "XLVII"},
+		{49, "XLIX"},
+		{50, "L"},
+		{93, "XCIII"},
+		{124, "CXXIV"},
+		{450, "CDL"},
+		{478, "CDLXXVIII"},
+		{789, "DCCLXXXIX"},
+	}
+
+	for _, test := range cases {
+		t.Run(fmt.Sprintf("%q gets converted to %d", test.Roman, test.Arabic), func(t *testing.T) {
+			got := ConvertToArabic(test.Roman)
+			if got != test.Arabic {
+				t.Errorf("got %q, want %q", got, test.Arabic)
 			}
 		})
 	}

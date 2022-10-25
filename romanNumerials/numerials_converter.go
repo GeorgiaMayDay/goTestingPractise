@@ -2,30 +2,37 @@ package romanNumerials
 
 import "strings"
 
+type RomanNumeral struct {
+	Value  int
+	Symbol string
+}
+
+var allRomanNumerals = []RomanNumeral{
+	{1000, "M"},
+	{900, "CM"},
+	{500, "D"},
+	{400, "CD"},
+	{100, "C"},
+	{90, "XC"},
+	{50, "L"},
+	{40, "XL"},
+	{10, "X"},
+	{9, "IX"},
+	{5, "V"},
+	{4, "IV"},
+	{1, "I"},
+}
+
 func ConvertToRomans(arabicNum int) string {
 	var finalNum strings.Builder
-	for arabicNum > 0 {
-		switch arabicNum {
-		case 4:
-			finalNum.WriteString("IV")
-			arabicNum -= 4
-			break
-		case 9:
-			finalNum.WriteString("IX")
-			arabicNum -= 9
-			break
-		case 10:
-			finalNum.WriteString("X")
-			arabicNum -= 10
-			break
-		case 5, 6, 7, 8:
-			finalNum.WriteString("V")
-			arabicNum -= 5
-			break
-		default:
-			finalNum.WriteString("I")
-			arabicNum--
+	for _, numeral := range allRomanNumerals {
+		for arabicNum >= numeral.Value {
+			finalNum.WriteString(numeral.Symbol)
+			arabicNum -= numeral.Value
 		}
 	}
 	return finalNum.String()
 }
+
+
+
