@@ -58,11 +58,11 @@ func TestWalk(t *testing.T) {
 			[]string{"Beedle"},
 			&SpyWalk{},
 		},
-		/* 	{"Just a string",
+		{"Just a string",
 			"Cheedle",
 			[]string{"Cheedle"},
 			&SpyWalk{},
-		}, */
+		},
 		{"struct with two string field",
 			struct {
 				Name      string
@@ -79,6 +79,14 @@ func TestWalk(t *testing.T) {
 		{"struct with with struct with string field",
 			MarriedPerson{"Beedle", "Weedle", Person{"Teedle", "Meedle"}},
 			[]string{"Beedle", "Weedle", "Teedle", "Meedle"},
+			&SpyWalk{},
+		},
+		{"slice",
+			[]Profile{
+				{33, "Needle"},
+				{44, "Queedle"},
+			},
+			[]string{"Needle", "Queedle"},
 			&SpyWalk{},
 		},
 	}
