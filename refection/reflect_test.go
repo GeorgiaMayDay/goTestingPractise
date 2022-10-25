@@ -89,6 +89,14 @@ func TestWalk(t *testing.T) {
 			[]string{"Needle", "Queedle"},
 			&SpyWalk{},
 		},
+		{"array",
+			[2]Profile{
+				{33, "Needle"},
+				{44, "Queedle"},
+			},
+			[]string{"Needle", "Queedle"},
+			&SpyWalk{},
+		},
 	}
 
 	for _, ex := range cases {
