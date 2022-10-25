@@ -35,6 +35,10 @@ func TestServer(t *testing.T) {
 		if response.Body.String() != data {
 			t.Errorf(`got "%s", want "%s"`, response.Body.String(), data)
 		}
+
+		if store.cancelled {
+			t.Errorf("store was cancelled")
+		}
 	})
 
 	t.Run("tells store to cancel work if request is cancelled", func(t *testing.T) {
