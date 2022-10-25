@@ -1,9 +1,12 @@
 package racer
 
 import (
+	"errors"
 	"net/http"
 	"time"
 )
+
+var ErrTakesTooLong = errors.New("websites took too long to respond")
 
 func measureResponseTime(link string) time.Duration {
 	start := time.Now()
@@ -30,7 +33,18 @@ func betterRacer(linkA string, linkB string) (winner string, err error) {
 		return linkA, nil
 	case <-ping(linkB):
 		return linkB, nil
+	case <-takesTooLong():
+		return "Error", ErrTakesTooLong
 	}
+}
+
+func takesTooLong() chan struct{} {
+	done := make(chan struct{})
+	go func() {
+		time.Sleep(10 * time.Second)
+		close(done)
+	}()
+	return done
 }
 
 // This function is used to signal when the request has processed
