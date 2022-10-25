@@ -34,5 +34,6 @@ func ConvertToRomans(arabicNum int) string {
 	return finalNum.String()
 }
 
-
-
+func ConvertToArabic(roman string) int {
+	return 0
+}

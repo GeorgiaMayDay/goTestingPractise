@@ -71,7 +71,7 @@ func TestToArabic(t *testing.T) {
 		t.Run(fmt.Sprintf("%q gets converted to %d", test.Roman, test.Arabic), func(t *testing.T) {
 			got := ConvertToArabic(test.Roman)
 			if got != test.Arabic {
-				t.Errorf("got %q, want %q", got, test.Arabic)
+				t.Errorf("got %d, want %d", got, test.Arabic)
 			}
 		})
 	}
