@@ -34,13 +34,26 @@ func (s *SpyWalk) Count(word string) {
 	s.numOfCalls = append(s.numOfCalls, word)
 }
 
-func (s *SpyWalk) Fetch() (calls []string) {
+func (s SpyWalk) Fetch() (calls []string) {
 	return s.numOfCalls
 }
 
 type NameContainer struct {
 	Name      string
 	OtherName string
+}
+
+func assertContains(t testing.TB, haystack []string, needle string) {
+	t.Helper()
+	contains := false
+	for _, x := range haystack {
+		if x == needle {
+			contains = true
+		}
+	}
+	if !contains {
+		t.Errorf("expected %+v to contain %q but it didn't", haystack, needle)
+	}
 }
 
 func TestWalk(t *testing.T) {
@@ -128,4 +141,19 @@ func TestWalk(t *testing.T) {
 		}
 
 	}
+
+	t.Run("with maps", func(t *testing.T) {
+		aMap := map[string]string{
+			"Cheedle": "Seedle",
+			"Ceedle":  "Sheedle",
+		}
+
+		spy := &SpyWalk{}
+
+		Walk(aMap, spy.Count)
+
+		assertContains(t, spy.numOfCalls, "Seedle")
+		assertContains(t, spy.numOfCalls, "Sheedle")
+	})
+
 }
