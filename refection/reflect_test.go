@@ -4,6 +4,11 @@ import (
 	"testing"
 )
 
+type Spy interface {
+	Count(string)
+	Fetch() []string
+}
+
 type SpyWalk struct {
 	numOfCalls []string
 }
@@ -12,20 +17,45 @@ func (s *SpyWalk) Count(word string) {
 	s.numOfCalls = append(s.numOfCalls, word)
 }
 
+func (s *SpyWalk) Fetch() (calls []string) {
+	return s.numOfCalls
+}
+
 func TestWalk(t *testing.T) {
-	input := "Cheedle"
-	spy := SpyWalk{}
 
-	Walk(input, spy.Count)
-
-	got := spy.numOfCalls
-	want := 1
-
-	if len(got) != want {
-		t.Errorf("got %d want %d", len(got), want)
+	cases := []struct {
+		name          string
+		input         interface{}
+		expectedCalls []string
+		spy           Spy
+	}{
+		{"struct with one string field",
+			struct {
+				Name string
+			}{"Beedle"},
+			[]string{"Beedle"},
+			&SpyWalk{},
+		},
+		{"Just a string",
+			"Cheedle",
+			[]string{"Cheedle"},
+			&SpyWalk{},
+		},
 	}
 
-	if got[0] != input {
-		t.Errorf("got %q, want %q", got[0], input)
+	for _, ex := range cases {
+
+		Walk(ex.input, ex.spy.Count)
+
+		got := ex.spy.Fetch()
+		want := ex.expectedCalls
+
+		if len(got) != len(want) {
+			t.Errorf("got %d want %d", len(got), len(want))
+		}
+
+		if got[0] != want[0] {
+			t.Errorf("got %q, want %q", got[0], want[0])
+		}
 	}
 }
