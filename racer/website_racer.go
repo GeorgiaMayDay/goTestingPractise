@@ -23,3 +23,22 @@ func Racer(linkA string, linkB string) (winner string) {
 		return linkA
 	}
 }
+
+func betterRacer(linkA string, linkB string) (winner string) {
+	select {
+	case <-ping(linkA):
+		return linkA
+	case <-ping(linkB):
+		return linkB
+	}
+}
+
+// This function is used to signal when the request has processed
+func ping(url string) chan struct{} {
+	done := make(chan struct{})
+	go func() {
+		http.Get(url)
+		close(done)
+	}()
+	return done
+}

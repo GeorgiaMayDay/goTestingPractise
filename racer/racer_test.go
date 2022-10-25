@@ -24,11 +24,23 @@ func TestRacer(t *testing.T) {
 	slowURL := slowServer.URL
 	fastURL := fastServer.URL
 
-	want := fastURL
-	got := Racer(slowURL, fastURL)
+	t.Run("Racer no concurrency", func(t *testing.T) {
 
-	if got != want {
-		t.Errorf("got %q, want %q", got, want)
-	}
+		want := fastURL
+		got := Racer(slowURL, fastURL)
+
+		if got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+	})
+
+	t.Run("Racer with concurrency", func(t *testing.T) {
+		want := fastURL
+		got := betterRacer(slowURL, fastURL)
+
+		if got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+	})
 
 }
