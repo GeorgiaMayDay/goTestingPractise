@@ -12,24 +12,24 @@ func measureResponseTime(link string) time.Duration {
 	return duration
 }
 
-func Racer(linkA string, linkB string) (winner string) {
+func Racer(linkA string, linkB string) (winner string, err error) {
 	aDuration := measureResponseTime(linkA)
 
 	bDuration := measureResponseTime(linkB)
 
 	if bDuration < aDuration {
-		return linkB
+		return linkB, nil
 	} else {
-		return linkA
+		return linkA, nil
 	}
 }
 
-func betterRacer(linkA string, linkB string) (winner string) {
+func betterRacer(linkA string, linkB string) (winner string, err error) {
 	select {
 	case <-ping(linkA):
-		return linkA
+		return linkA, nil
 	case <-ping(linkB):
-		return linkB
+		return linkB, nil
 	}
 }
 
