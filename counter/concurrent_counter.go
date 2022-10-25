@@ -16,3 +16,7 @@ func (c *Counter) Inc() {
 func (c *Counter) Current() (currentNum int) {
 	return c.count
 }
+
+func NewCounter() *Counter {
+	return &Counter{}
+}

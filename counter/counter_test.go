@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func assertCounter(t testing.TB, counter Counter, want int) {
+func assertCounter(t testing.TB, counter *Counter, want int) {
 	t.Helper()
 	if counter.Current() != want {
 		t.Errorf("got %d want %d", counter.Current(), want)
@@ -22,7 +22,7 @@ func TestCounter(t *testing.T) {
 
 	t.Run("test concurrency", func(t *testing.T) {
 		wantedCount := 1000
-		counter := Counter{}
+		counter := NewCounter()
 
 		var wg sync.WaitGroup
 		wg.Add(wantedCount)
