@@ -41,6 +41,14 @@ func TestWalk(t *testing.T) {
 			[]string{"Cheedle"},
 			&SpyWalk{},
 		},
+		{"struct with two string field",
+			struct {
+				Name      string
+				OtherName string
+			}{"Beedle", "Weedle"},
+			[]string{"Beedle", "Weedle"},
+			&SpyWalk{},
+		},
 	}
 
 	for _, ex := range cases {
