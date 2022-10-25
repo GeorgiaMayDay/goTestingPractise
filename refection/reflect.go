@@ -5,15 +5,25 @@ import (
 )
 
 func Walk(x interface{}, fn func(string)) {
-	val := reflect.ValueOf(x)
-	switch x.(type) {
-	case string:
-		fn(val.String())
-		break
-	default:
-		for i := 0; i < val.NumField(); i++ {
-			field := val.Field(i)
+	val := getValue(x)
+
+	for i := 0; i < val.NumField(); i++ {
+		field := val.Field(i)
+		switch field.Kind() {
+		case reflect.String:
 			fn(field.String())
+		case reflect.Struct:
+			Walk(field.Interface(), fn)
 		}
 	}
+}
+
+func getValue(x interface{}) reflect.Value {
+	val := reflect.ValueOf(x)
+
+	if val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
+
+	return val
 }
