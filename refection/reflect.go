@@ -16,15 +16,9 @@ func Walk(x interface{}, fn func(string)) {
 			Walk(val.Index(i).Interface(), fn)
 		}
 		return
-	}
-
-	for i := 0; i < val.NumField(); i++ {
-		field := val.Field(i)
-		switch field.Kind() {
-		case reflect.String:
-			fn(field.String())
-		case reflect.Struct:
-			Walk(field.Interface(), fn)
+	case reflect.Struct:
+		for i := 0; i < val.NumField(); i++ {
+			Walk(val.Field(i).Interface(), fn)
 		}
 	}
 }
