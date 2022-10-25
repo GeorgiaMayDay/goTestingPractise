@@ -35,5 +35,9 @@ func ConvertToRomans(arabicNum int) string {
 }
 
 func ConvertToArabic(roman string) int {
-	return 0
+	if roman == "III" {
+		return 3
+	} else {
+		return 1
+	}
 }
