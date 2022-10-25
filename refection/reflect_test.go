@@ -97,6 +97,15 @@ func TestWalk(t *testing.T) {
 			[]string{"Needle", "Queedle"},
 			&SpyWalk{},
 		},
+		{
+			"maps",
+			map[string]string{
+				"Cheedle": "Seedle",
+				"Ceedle":  "Sheedle",
+			},
+			[]string{"Seedle", "Sheedle"},
+			&SpyWalk{},
+		},
 	}
 
 	for _, ex := range cases {

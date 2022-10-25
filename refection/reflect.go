@@ -7,6 +7,10 @@ import (
 func Walk(x interface{}, fn func(string)) {
 	val := getValue(x)
 
+	walkValue := func(value reflect.Value) {
+		Walk(value.Interface(), fn)
+	}
+
 	numberOfValues := 0
 	var getField func(int) reflect.Value
 
@@ -15,11 +19,17 @@ func Walk(x interface{}, fn func(string)) {
 		fn(val.String())
 		return
 	case reflect.Slice, reflect.Array:
-		numberOfValues = val.Len()
-		getField = val.Index
+		for i := 0; i < val.Len(); i++ {
+			walkValue(val.Index(i))
+		}
 	case reflect.Struct:
-		numberOfValues = val.NumField()
-		getField = val.Field
+		for i := 0; i < val.NumField(); i++ {
+			walkValue(val.Field(i))
+		}
+	case reflect.Map:
+		for _, key := range val.MapKeys() {
+			walkValue(val.MapIndex(key))
+		}
 	}
 
 	for i := 0; i < numberOfValues; i++ {
