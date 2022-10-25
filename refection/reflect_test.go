@@ -5,11 +5,11 @@ import (
 )
 
 type SpyWalk struct {
-	numOfCalls int
+	numOfCalls []string
 }
 
 func (s *SpyWalk) Count(word string) {
-	s.numOfCalls += 1
+	s.numOfCalls = append(s.numOfCalls, word)
 }
 
 func TestWalk(t *testing.T) {
@@ -21,7 +21,11 @@ func TestWalk(t *testing.T) {
 	got := spy.numOfCalls
 	want := 1
 
-	if got != want {
-		t.Errorf("got %d want %d", got, want)
+	if len(got) != want {
+		t.Errorf("got %d want %d", len(got), want)
+	}
+
+	if got[0] != input {
+		t.Errorf("got %q, want %q", got[0], input)
 	}
 }
