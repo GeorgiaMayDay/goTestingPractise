@@ -1,6 +1,8 @@
 package romanNumerials
 
-import "strings"
+import (
+	"strings"
+)
 
 type RomanNumeral struct {
 	Value  int
@@ -23,6 +25,21 @@ var allRomanNumerals = []RomanNumeral{
 	{1, "I"},
 }
 
+func ValueOf(symbols ...byte) int {
+	symbol := string(symbols)
+	for _, s := range allRomanNumerals {
+		if s.Symbol == symbol {
+			return s.Value
+		}
+	}
+
+	return 0
+}
+
+func couldBeSubtractive(position int, currentChar byte, fullNum string) bool {
+	return position+1 < len(fullNum) && (currentChar == 'I' || currentChar == 'X')
+}
+
 func ConvertToRomans(arabicNum int) string {
 	var finalNum strings.Builder
 	for _, numeral := range allRomanNumerals {
@@ -35,9 +52,27 @@ func ConvertToRomans(arabicNum int) string {
 }
 
 func ConvertToArabic(roman string) int {
-	if roman == "III" {
-		return 3
-	} else {
-		return 1
+	total := 0
+
+	for i := 0; i < len(roman); i++ {
+		symbol := roman[i]
+
+		//check if there is a number pair possibel for this one
+		if couldBeSubtractive(i, symbol, roman) {
+			nextSymbol := roman[i+1]
+			//check if it is a number pair
+			check := ValueOf(symbol, nextSymbol)
+
+			if check != 0 {
+				total = check
+				i++
+			} else {
+				total++ // this implies all other numbers are I
+			}
+
+		} else {
+			total += ValueOf(symbol)
+		}
 	}
+	return total
 }
