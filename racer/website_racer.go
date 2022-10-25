@@ -27,24 +27,19 @@ func Racer(linkA string, linkB string) (winner string, err error) {
 	}
 }
 
-func betterRacer(linkA string, linkB string) (winner string, err error) {
+func BetterRacer(linkA string, linkB string) (winner string, err error) {
+	return TestableRacer(linkA, linkB, time.Duration(10*time.Second))
+}
+
+func TestableRacer(linkA string, linkB string, timeout time.Duration) (winner string, err error) {
 	select {
 	case <-ping(linkA):
 		return linkA, nil
 	case <-ping(linkB):
 		return linkB, nil
-	case <-takesTooLong():
+	case <-time.After(timeout):
 		return "Error", ErrTakesTooLong
 	}
-}
-
-func takesTooLong() chan struct{} {
-	done := make(chan struct{})
-	go func() {
-		time.Sleep(10 * time.Second)
-		close(done)
-	}()
-	return done
 }
 
 // This function is used to signal when the request has processed

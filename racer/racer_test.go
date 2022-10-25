@@ -40,7 +40,7 @@ func TestRacer(t *testing.T) {
 
 	t.Run("Racer with concurrency", func(t *testing.T) {
 		want := fastURL
-		got, err := betterRacer(slowURL, fastURL)
+		got, err := BetterRacer(slowURL, fastURL)
 
 		if got != want {
 			t.Errorf("got %q, want %q", got, want)
@@ -52,20 +52,17 @@ func TestRacer(t *testing.T) {
 	})
 
 	t.Run("Racer returns error if both servers take 10 sec", func(t *testing.T) {
-		slowServer := makeMeAServer(11 * time.Second)
-		fastServer := makeMeAServer(11 * time.Second)
+		tooSlowServer := makeMeAServer(24 * time.Millisecond)
 
-		defer slowServer.Close()
-		defer fastServer.Close()
+		slowestURL := tooSlowServer.URL
 
-		slowURL := slowServer.URL
-		fastURL := fastServer.URL
-
-		_, err := betterRacer(slowURL, fastURL)
+		_, err := TestableRacer(slowestURL, slowestURL, time.Duration(2*time.Millisecond))
 
 		if err == nil {
 			t.Errorf("got no error, want error")
 		}
+
+		tooSlowServer.Close()
 	})
 
 }
