@@ -1,6 +1,7 @@
 package reflection
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -65,5 +66,10 @@ func TestWalk(t *testing.T) {
 		if got[0] != want[0] {
 			t.Errorf("got %q, want %q", got[0], want[0])
 		}
+
+		if !reflect.DeepEqual(got, want) {
+			t.Errorf("got %v, want %v", got, want)
+		}
+
 	}
 }

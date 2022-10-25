@@ -6,6 +6,14 @@ import (
 
 func Walk(x interface{}, fn func(string)) {
 	val := reflect.ValueOf(x)
-	//field := val.Field(0)
-	fn(val.String())
+	switch x.(type) {
+	case string:
+		fn(val.String())
+		break
+	default:
+		for i := 0; i < val.NumField(); i++ {
+			field := val.Field(i)
+			fn(field.String())
+		}
+	}
 }
