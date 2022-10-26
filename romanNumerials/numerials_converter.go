@@ -1,6 +1,7 @@
 package romanNumerials
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -37,7 +38,7 @@ func ValueOf(symbols ...byte) int {
 }
 
 func couldBeSubtractive(position int, currentChar byte, fullNum string) bool {
-	return position+1 < len(fullNum) && (currentChar == 'I' || currentChar == 'X')
+	return position+1 < len(fullNum) && (currentChar == 'I' || currentChar == 'X' || currentChar == 'C')
 }
 
 func ConvertToRomans(arabicNum int) string {
@@ -53,6 +54,9 @@ func ConvertToRomans(arabicNum int) string {
 
 func ConvertToArabic(roman string) int {
 	total := 0
+	if roman == "XXXIX" {
+		fmt.Println(total)
+	}
 
 	for i := 0; i < len(roman); i++ {
 		symbol := roman[i]
@@ -64,10 +68,10 @@ func ConvertToArabic(roman string) int {
 			check := ValueOf(symbol, nextSymbol)
 
 			if check != 0 {
-				total = check
+				total += check
 				i++
 			} else {
-				total++ // this implies all other numbers are I
+				total += ValueOf(symbol)
 			}
 
 		} else {
